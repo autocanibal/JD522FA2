@@ -4,32 +4,40 @@
  */
 package org.mondemkhize.jd522fa2;
 
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author monde
  */
 public class TaskDB {
-    public void connect (){
+    private Connection connect (Component comp){
         Connection conn = null;
+        String connectionString = "jdbc:sqlite:/home/monde/databasename";
         try{
-            String connectionString = "jdbc:sqlite:/home/monde/databasename";
             conn = DriverManager.getConnection(connectionString);
-            System.out.println("Connection to sqlite successfull");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }finally {
-            try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            new JOptionPane().showMessageDialog(comp,e.getMessage());
         }
+        return conn;
     }
+    public void insert(String one, int two, Component comp){
+       String sql = "INSERT INTO tbleone(one,two) VALUES(?,?)" ;
+       
+       try(Connection conn = this.connect(comp);
+           PreparedStatement pstmnt = conn.prepareStatement(sql)){
+           pstmnt.setString(1,one);
+           pstmnt.setInt(2, two);
+           pstmnt.executeUpdate();
+           new JOptionPane().showMessageDialog(comp, pstmnt + "Successful");
+       }catch (SQLException e){
+           new JOptionPane().showMessageDialog(comp, e.getMessage());
+       }
 }
         
         
