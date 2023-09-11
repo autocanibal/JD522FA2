@@ -5,10 +5,8 @@
 package org.mondemkhize.jd522fa2;
 
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +14,14 @@ import javax.swing.JOptionPane;
  * @author monde
  */
 public class TaskDB {
+    private ArrayList<Task> TasksList = new ArrayList();
+
+    public ArrayList<Task> getTasksList() {
+        return TasksList;
+    }
     private Connection connect (Component comp){
         Connection conn = null;
-        String connectionString = "jdbc:sqlite:/home/monde/databasename";
+        String connectionString = "jdbc:sqlite:/home/monde/TaskManager";
         try{
             conn = DriverManager.getConnection(connectionString);
         } catch (SQLException e) {
@@ -26,20 +29,51 @@ public class TaskDB {
         }
         return conn;
     }
-    public void insert(String one, int two, Component comp){
-       String sql = "INSERT INTO tbleone(one,two) VALUES(?,?)" ;
+    public void insert(String Name, String Category, String Description, String CompletionState, Component comp){
+       String sql = "INSERT INTO TaskInfo(TaskName,Category, Description, CompletionState) VALUES(?,?,?,?)" ;
        
        try(Connection conn = this.connect(comp);
            PreparedStatement pstmnt = conn.prepareStatement(sql)){
-           pstmnt.setString(1,one);
-           pstmnt.setInt(2, two);
+           pstmnt.setString(1,Name);
+           pstmnt.setString(2, Category);
+           pstmnt.setString(3, Description);
+           pstmnt.setString(4, CompletionState);
            pstmnt.executeUpdate();
            new JOptionPane().showMessageDialog(comp, pstmnt + "Successful");
        }catch (SQLException e){
            new JOptionPane().showMessageDialog(comp, e.getMessage());
        }
 }
+    
+    public void selectAll(Component comp){
+        String sql = "select * from TaskInfo";
         
+        try(Connection conn = this.connect(comp);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql))
+        {
+            
+            while(rs.next()){
+                Task currentTask = new Task();
+                currentTask.setName(rs.getString("TaskName"));
+                currentTask.setCategory(rs.getString("Category"));
+                currentTask.setDescription(rs.getString("Description"));
+                boolean compState = Boolean.parseBoolean(rs.getString("CompletionState"));
+                currentTask.setCompletionState(compState);
+                TasksList.add(currentTask);
+                System.out.println(rs.getString("TaskName")+ "\t" + 
+                        rs.getString("Category") + "\t"+
+                        rs.getString("Description") +"\t"+ 
+                        rs.getString("CompletionState"));
+                
+            }
+            System.out.println(TasksList.size());
+            
+        }catch (SQLException e) {
+            new JOptionPane().showMessageDialog(comp, e.getMessage());
+        }
+    }
+    
         
 }
 
