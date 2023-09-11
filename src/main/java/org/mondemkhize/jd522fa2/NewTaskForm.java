@@ -153,20 +153,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         TaskDB bruv = new TaskDB();
         bruv.insert(taskName, category, description, completionState, this);
         
-        BufferedWriter out = null;
-        try{
-            out = new BufferedWriter(new FileWriter("out.txt"));
-            out.write(taskName+" "+category+" "+description+" "+ completionState);
-            new JOptionPane().showMessageDialog(this, "It worked");
-        }catch (IOException ex) {
-            new JOptionPane().showMessageDialog(this, "IO Failed");
-        }finally{
-            try {
-                out.close();
-            } catch (IOException ex) {
-                Logger.getLogger(NewTaskForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        currentTask.writeToFile(taskName, category, description, completionState, this);
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
