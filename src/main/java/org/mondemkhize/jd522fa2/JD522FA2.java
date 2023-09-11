@@ -98,8 +98,8 @@ public class JD522FA2 extends javax.swing.JFrame {
 
     private void ViewTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewTaskBtnActionPerformed
         // TODO add your handling code here:
-        TaskDB task = new TaskDB();
-        task.insert("Archlinux",1,this);
+        ViewForm view = new ViewForm();
+        view.setVisible(true);
     }//GEN-LAST:event_ViewTaskBtnActionPerformed
 
     private void NewTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewTaskBtnActionPerformed
