@@ -17,6 +17,26 @@ public class ViewForm extends javax.swing.JFrame {
      */
     public ViewForm() {
         initComponents();
+        /*
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {
+        {null, null, null, null},
+        {null, null, null, null},
+        {null, null, null, null}
+    },
+    new String [] {
+        "Task Name", "Category", "Description", "CompletionState"
+    }
+) {
+    Class[] types = new Class [] {
+        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+    };
+
+    public Class getColumnClass(int columnIndex) {
+        return types [columnIndex];
+    }
+});
+        */
     }
 
     /**
@@ -31,35 +51,27 @@ public class ViewForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TaskDB tdb = new TaskDB();
         tdb.selectAll(this);
-        ArrayList tasks = tdb.getTasksList();
+        ArrayList<Task> tasks = tdb.getTasksList();
         jTable1 = new javax.swing.JTable();
+        BackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Task Name", "Category", "Description", "CompletionState"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(new String [] {"Task Name", "Category", "Description", "CompletionState"},tasks.size()));
         for(int a = 0; a<tasks.size();a++ ){
-            jTable1.setValueAt(tasks.get(a), a, 0);
-            jTable1.setValueAt(tasks.get(a), a, 1);
-            jTable1.setValueAt(tasks.get(a), a, 2);
-            jTable1.setValueAt(tasks.get(a), a, 3);
+            jTable1.setValueAt(tasks.get(a).getName(), a, 0);
+            jTable1.setValueAt(tasks.get(a).getCategory(), a, 1);
+            jTable1.setValueAt(tasks.get(a).getDescription(), a, 2);
+            jTable1.setValueAt(String.valueOf(tasks.get(a).isCompletionState()), a, 3);
         }
         jScrollPane2.setViewportView(jTable1);
+
+        BackBtn.setText("Return Home");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,19 +79,32 @@ public class ViewForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BackBtn)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BackBtn)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+        JD522FA2 mainwin = new JD522FA2();
+        mainwin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,6 +142,7 @@ public class ViewForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackBtn;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

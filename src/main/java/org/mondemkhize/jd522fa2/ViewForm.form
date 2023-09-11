@@ -25,8 +25,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="375" max="-2" attributes="0"/>
-              <EmptySpace pref="200" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="488" max="-2" attributes="0"/>
+              <EmptySpace pref="126" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,8 +39,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="275" max="-2" attributes="0"/>
-              <EmptySpace pref="90" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="320" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,47 +57,30 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="for(int a = 0; a&lt;tasks.size();a++ ){&#xa;jTable1.setValueAt(tasks.get(a), a, 0);&#xa;jTable1.setValueAt(tasks.get(a), a, 1);&#xa;jTable1.setValueAt(tasks.get(a), a, 2);&#xa;jTable1.setValueAt(tasks.get(a), a, 3);&#xa;}">
-              <Table columnCount="4" rowCount="2">
-                <Column editable="true" title="Task Name" type="java.lang.String"/>
-                <Column editable="true" title="Category" type="java.lang.String"/>
-                <Column editable="true" title="Description" type="java.lang.String"/>
-                <Column editable="true" title="CompletionState" type="java.lang.String"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(new String [] {&quot;Task Name&quot;, &quot;Category&quot;, &quot;Description&quot;, &quot;CompletionState&quot;},tasks.size())" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
+              <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TaskDB tdb = new TaskDB();&#xa;tdb.selectAll(this);&#xa;ArrayList tasks = tdb.getTasksList();"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TaskDB tdb = new TaskDB();&#xa;tdb.selectAll(this);&#xa;ArrayList&lt;Task&gt; tasks = tdb.getTasksList();"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int a = 0; a&lt;tasks.size();a++ ){&#xa;jTable1.setValueAt(tasks.get(a).getName(), a, 0);&#xa;jTable1.setValueAt(tasks.get(a).getCategory(), a, 1);&#xa;jTable1.setValueAt(tasks.get(a).getDescription(), a, 2);&#xa;jTable1.setValueAt(String.valueOf(tasks.get(a).isCompletionState()), a, 3);&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="BackBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Return Home"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackBtnActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
