@@ -4,6 +4,13 @@
  */
 package org.mondemkhize.jd522fa2;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author monde
@@ -26,81 +33,139 @@ public class NewTaskForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        TaskNameField = new javax.swing.JTextField();
+        TaskNameLabel = new javax.swing.JLabel();
+        DescriTaskLabel = new javax.swing.JLabel();
+        DecriptionPane = new javax.swing.JScrollPane();
+        DecriptionField = new javax.swing.JTextArea();
+        CompletionBox = new javax.swing.JCheckBox();
+        AddBtn = new javax.swing.JButton();
+        CanclBtn = new javax.swing.JButton();
+        CategoryLabel = new javax.swing.JLabel();
+        CategoryField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("NewTask");
 
-        jLabel1.setText("Name:");
+        TaskNameLabel.setText("Name:");
 
-        jLabel2.setText("Description:");
+        DescriTaskLabel.setText("Description:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        DecriptionField.setColumns(20);
+        DecriptionField.setRows(5);
+        DecriptionPane.setViewportView(DecriptionField);
 
-        jCheckBox1.setText("Done");
+        CompletionBox.setText("Complete");
 
-        jButton1.setText("Add");
+        AddBtn.setText("Add");
+        AddBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddBtnActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Cancel");
+        CanclBtn.setText("Cancel");
+        CanclBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CanclBtnActionPerformed(evt);
+            }
+        });
+
+        CategoryLabel.setText("Category:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(DescriTaskLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DecriptionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 105, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(CategoryLabel))
+                            .addComponent(TaskNameLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TaskNameField)
+                            .addComponent(CategoryField))
+                        .addGap(127, 127, 127))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(126, 126, 126))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
-                        .addGap(161, 161, 161))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addGap(149, 149, 149))))
+                            .addComponent(CanclBtn)
+                            .addComponent(AddBtn))
+                        .addGap(75, 75, 75))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(CompletionBox)
+                        .addGap(199, 199, 199))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(TaskNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TaskNameLabel))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CategoryLabel)
+                    .addComponent(CategoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DecriptionPane, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DescriTaskLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(CompletionBox)
+                .addGap(18, 18, 18)
+                .addComponent(AddBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addComponent(CanclBtn)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
+        // TODO add your handling code here:
+        Task currentTask = new Task();
+        currentTask.setName(this.TaskNameField.getText());
+        currentTask.setDescription(this.DecriptionField.getText());
+        currentTask.setCategory(this.CategoryField.getText());
+        currentTask.setCompletionState(this.CompletionBox.isSelected());
+        String completionState = String.valueOf(currentTask.isCompletionState());
+        
+        BufferedWriter out = null;
+        try{
+            out = new BufferedWriter(new FileWriter("out.txt"));
+            out.write(currentTask.getName()+" "+currentTask.getCategory()+" "+currentTask.getDescription()+" "+ completionState);
+            new JOptionPane().showMessageDialog(this, "It worked");
+        }catch (IOException ex) {
+            new JOptionPane().showMessageDialog(this, "IO Failed");
+        }finally{
+            try {
+                out.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NewTaskForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_AddBtnActionPerformed
+
+    private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
+        // TODO add your handling code here:
+        JD522FA2 mainwin = new JD522FA2();
+        mainwin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_CanclBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,13 +203,15 @@ public class NewTaskForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton AddBtn;
+    private javax.swing.JButton CanclBtn;
+    private javax.swing.JTextField CategoryField;
+    private javax.swing.JLabel CategoryLabel;
+    private javax.swing.JCheckBox CompletionBox;
+    private javax.swing.JTextArea DecriptionField;
+    private javax.swing.JScrollPane DecriptionPane;
+    private javax.swing.JLabel DescriTaskLabel;
+    private javax.swing.JTextField TaskNameField;
+    private javax.swing.JLabel TaskNameLabel;
     // End of variables declaration//GEN-END:variables
 }
