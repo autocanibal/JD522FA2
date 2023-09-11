@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author monde
  */
 public class TaskDB {
+    private String OSname = System.getProperty("os.name");
     private ArrayList<Task> TasksList = new ArrayList();
 
     public ArrayList<Task> getTasksList() {
@@ -21,9 +22,15 @@ public class TaskDB {
     }
     private Connection connect (Component comp){
         Connection conn = null;
-        String connectionString = "jdbc:sqlite:/home/monde/TaskManager";
+        
         try{
-            conn = DriverManager.getConnection(connectionString);
+            if (OSname.equals("Windows 11")) {
+                String connectionString = "jdbc:sqlite:C:/sqlite/TaskManager.db";
+                conn = DriverManager.getConnection(connectionString);
+            } else {
+                String connectionString = "jdbc:sqlite:/home/monde/TaskManager";
+                conn = DriverManager.getConnection(connectionString);
+            }
         } catch (SQLException e) {
             new JOptionPane().showMessageDialog(comp,e.getMessage());
         }
@@ -60,14 +67,8 @@ public class TaskDB {
                 currentTask.setDescription(rs.getString("Description"));
                 boolean compState = Boolean.parseBoolean(rs.getString("CompletionState"));
                 currentTask.setCompletionState(compState);
-                TasksList.add(currentTask);
-                System.out.println(rs.getString("TaskName")+ "\t" + 
-                        rs.getString("Category") + "\t"+
-                        rs.getString("Description") +"\t"+ 
-                        rs.getString("CompletionState"));
-                
+                TasksList.add(currentTask); 
             }
-            System.out.println(TasksList.size());
             
         }catch (SQLException e) {
             new JOptionPane().showMessageDialog(comp, e.getMessage());
