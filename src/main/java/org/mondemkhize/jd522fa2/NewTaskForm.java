@@ -139,15 +139,24 @@ public class NewTaskForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         Task currentTask = new Task();
         currentTask.setName(this.TaskNameField.getText());
+        String taskName = currentTask.getName(); //New variable made to be used in database and file
+        
         currentTask.setDescription(this.DecriptionField.getText());
+        String description = currentTask.getDescription();//New variable made to be used in database and file
+        
         currentTask.setCategory(this.CategoryField.getText());
+        String category = currentTask.getCategory();//New variable made to be used in database and file
+        
         currentTask.setCompletionState(this.CompletionBox.isSelected());
-        String completionState = String.valueOf(currentTask.isCompletionState());
+        String completionState = String.valueOf(currentTask.isCompletionState());//New variable made to be used in database and file
+        
+        TaskDB bruv = new TaskDB();
+        bruv.insert(taskName, category, description, completionState, this);
         
         BufferedWriter out = null;
         try{
             out = new BufferedWriter(new FileWriter("out.txt"));
-            out.write(currentTask.getName()+" "+currentTask.getCategory()+" "+currentTask.getDescription()+" "+ completionState);
+            out.write(taskName+" "+category+" "+description+" "+ completionState);
             new JOptionPane().showMessageDialog(this, "It worked");
         }catch (IOException ex) {
             new JOptionPane().showMessageDialog(this, "IO Failed");
