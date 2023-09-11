@@ -33,6 +33,7 @@ public class JD522FA2 extends javax.swing.JFrame {
         ViewTaskBtn = new javax.swing.JButton();
         CloseBtn = new javax.swing.JButton();
         TitleLbl = new javax.swing.JLabel();
+        textTasks = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TaskManager Home");
@@ -60,19 +61,28 @@ public class JD522FA2 extends javax.swing.JFrame {
 
         TitleLbl.setText("Task Manager");
 
+        textTasks.setText("View Text Tasks");
+        textTasks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTasksActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(161, 161, 161)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(TitleLbl)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(ViewTaskBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(NewTaskBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CloseBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(TitleLbl)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(ViewTaskBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NewTaskBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CloseBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(textTasks))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,7 +93,9 @@ public class JD522FA2 extends javax.swing.JFrame {
                 .addComponent(NewTaskBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ViewTaskBtn)
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textTasks)
+                .addGap(31, 31, 31)
                 .addComponent(CloseBtn)
                 .addGap(95, 95, 95))
         );
@@ -98,8 +110,11 @@ public class JD522FA2 extends javax.swing.JFrame {
 
     private void ViewTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewTaskBtnActionPerformed
         // TODO add your handling code here:
+        /*Task task = new Task();
+        task.readFromFile(this);*/
         ViewForm view = new ViewForm();
         view.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ViewTaskBtnActionPerformed
 
     private void NewTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewTaskBtnActionPerformed
@@ -108,6 +123,13 @@ public class JD522FA2 extends javax.swing.JFrame {
         newTaskForm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_NewTaskBtnActionPerformed
+
+    private void textTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTasksActionPerformed
+        // TODO add your handling code here:
+        TextViewForm tvf = new TextViewForm();
+        tvf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_textTasksActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,5 +171,6 @@ public class JD522FA2 extends javax.swing.JFrame {
     private javax.swing.JButton NewTaskBtn;
     private javax.swing.JLabel TitleLbl;
     private javax.swing.JButton ViewTaskBtn;
+    private javax.swing.JButton textTasks;
     // End of variables declaration//GEN-END:variables
 }
