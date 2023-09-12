@@ -5,12 +5,14 @@
 package org.mondemkhize.jd522fa2;
 
 import java.awt.Component;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.*;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,5 +88,30 @@ public class Task {
             return null;
         }
         
+    }
+    
+    public long fileSize(Component comp){
+        Path path = Path.of("out.txt");
+        try{
+            long bytes = Files.size(path);
+            return bytes;
+        }catch(IOException exception){
+            new JOptionPane().showMessageDialog(comp, exception.getMessage());
+            return 0;
+        }
+    }
+    
+    public String createTime(Component comp){
+        try{
+            Path path = Path.of("out.txt");
+            FileTime fileTime = (FileTime) Files.getAttribute(path, "creationTime");
+            LocalDateTime localDateTime = fileTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+            return localDateTime.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+            //return fileTime;
+        }catch (IOException ex) {
+            new JOptionPane().showMessageDialog(comp, ex.getMessage());
+            return "Never";
+        }
     }
 }

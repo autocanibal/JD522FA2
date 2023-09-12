@@ -25,17 +25,22 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Component id="TitleLbl" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="ViewTaskBtn" max="32767" attributes="0"/>
-                          <Component id="NewTaskBtn" alignment="1" max="32767" attributes="0"/>
-                          <Component id="CloseBtn" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="TitleLbl" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="ViewTaskBtn" max="32767" attributes="0"/>
+                              <Component id="NewTaskBtn" alignment="1" max="32767" attributes="0"/>
+                              <Component id="CloseBtn" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <Component id="textTasks" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
+                      <Component id="textTasks" min="-2" pref="119" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="188" max="32767" attributes="0"/>
           </Group>
