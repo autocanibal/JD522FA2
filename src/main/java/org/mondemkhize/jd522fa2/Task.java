@@ -17,8 +17,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -69,15 +67,10 @@ public class Task {
         try {
             out = new BufferedWriter(new FileWriter("out.txt"));
             out.write(taskName + "\n" + category + "\n" + description + "\n" + completionState);
-            new JOptionPane().showMessageDialog(comp, "It worked");
+            out.close();
+            new JOptionPane().showMessageDialog(comp, "File saved successfully");
         } catch (IOException ex) {
             new JOptionPane().showMessageDialog(comp, "IO Failed");
-        } finally {
-            try {
-                out.close();
-            } catch (IOException ex) {
-                Logger.getLogger(NewTaskForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
     
@@ -133,7 +126,6 @@ public class Task {
 
             // create a List which contains String array
             List<String[]> data = new ArrayList<String[]>();
-            ;
             data.add(new String[]{"TaskName", "Category", "Description", "Completon Status"});
             data.add(new String[]{table.getValueAt(table.getSelectedRow(), 0).toString(), table.getValueAt(table.getSelectedRow(), 1).toString(), table.getValueAt(table.getSelectedRow(), 2).toString(), table.getValueAt(table.getSelectedRow(), 3).toString()});
             writer.writeAll(data);

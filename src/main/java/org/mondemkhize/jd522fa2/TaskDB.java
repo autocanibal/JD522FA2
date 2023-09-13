@@ -46,7 +46,7 @@ public class TaskDB {
            pstmnt.setString(3, Description);
            pstmnt.setString(4, CompletionState);
            pstmnt.executeUpdate();
-           new JOptionPane().showMessageDialog(comp, pstmnt + "Successful");
+           new JOptionPane().showMessageDialog(comp, "Added task successfullly");
        }catch (SQLException e){
            new JOptionPane().showMessageDialog(comp, e.getMessage());
        }

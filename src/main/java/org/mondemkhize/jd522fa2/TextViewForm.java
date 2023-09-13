@@ -17,6 +17,7 @@ public class TextViewForm extends javax.swing.JFrame {
      */
     public TextViewForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
         Task task = new Task();
         List<String> fileTask = task.readFromFile(this);
         this.taskNameLbl.setText(fileTask.get(0));

@@ -15,6 +15,7 @@ public class NewTaskForm extends javax.swing.JFrame {
      */
     public NewTaskForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -18,6 +18,7 @@ public class ViewForm extends javax.swing.JFrame {
      */
     public ViewForm() {
         initComponents();
+        this.setLocationRelativeTo(null);
         /*
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
     new Object [][] {
