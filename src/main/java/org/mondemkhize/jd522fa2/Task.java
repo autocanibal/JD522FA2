@@ -4,8 +4,10 @@
  */
 package org.mondemkhize.jd522fa2;
 
+import com.opencsv.CSVWriter;
 import java.awt.Component;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.nio.file.*;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,10 +15,12 @@ import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -101,17 +105,44 @@ public class Task {
         }
     }
     
-    public String createTime(Component comp){
+    public String creationTime(Component comp){
         try{
             Path path = Path.of("out.txt");
             FileTime fileTime = (FileTime) Files.getAttribute(path, "creationTime");
             LocalDateTime localDateTime = fileTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-            return localDateTime.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+            return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
             //return fileTime;
         }catch (IOException ex) {
             new JOptionPane().showMessageDialog(comp, ex.getMessage());
             return "Never";
+        }
+    }
+    
+    public void xportToCSV(String fileName, JTable table,Component comp){
+        File file = new File(fileName);
+        try {
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(file);
+
+            // create CSVWriter with '|' as separator
+            CSVWriter writer = new CSVWriter(outputfile, '|',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            // create a List which contains String array
+            List<String[]> data = new ArrayList<String[]>();
+            ;
+            data.add(new String[]{"TaskName", "Category", "Description", "Completon Status"});
+            data.add(new String[]{table.getValueAt(table.getSelectedRow(), 0).toString(), table.getValueAt(table.getSelectedRow(), 1).toString(), table.getValueAt(table.getSelectedRow(), 2).toString(), table.getValueAt(table.getSelectedRow(), 3).toString()});
+            writer.writeAll(data);
+
+            // closing writer connection
+            writer.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            new JOptionPane().showMessageDialog(comp, e.getMessage());
         }
     }
 }

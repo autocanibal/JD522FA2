@@ -5,6 +5,7 @@
 package org.mondemkhize.jd522fa2;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,6 +55,8 @@ public class ViewForm extends javax.swing.JFrame {
         ArrayList<Task> tasks = tdb.getTasksList();
         jTable1 = new javax.swing.JTable();
         BackBtn = new javax.swing.JButton();
+        editTaskBtn = new javax.swing.JButton();
+        exportCSVBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,12 +67,27 @@ public class ViewForm extends javax.swing.JFrame {
             jTable1.setValueAt(tasks.get(a).getDescription(), a, 2);
             jTable1.setValueAt(String.valueOf(tasks.get(a).isCompletionState()), a, 3);
         }
+        jTable1.setRowSelectionAllowed(false);
         jScrollPane2.setViewportView(jTable1);
 
         BackBtn.setText("Return Home");
         BackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackBtnActionPerformed(evt);
+            }
+        });
+
+        editTaskBtn.setText("Edit Task");
+        editTaskBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTaskBtnActionPerformed(evt);
+            }
+        });
+
+        exportCSVBtn.setText("Export to CSV");
+        exportCSVBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportCSVBtnActionPerformed(evt);
             }
         });
 
@@ -83,6 +101,10 @@ public class ViewForm extends javax.swing.JFrame {
                 .addContainerGap(126, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(editTaskBtn)
+                .addGap(18, 18, 18)
+                .addComponent(exportCSVBtn)
+                .addGap(18, 18, 18)
                 .addComponent(BackBtn)
                 .addGap(46, 46, 46))
         );
@@ -92,7 +114,10 @@ public class ViewForm extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(BackBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BackBtn)
+                    .addComponent(editTaskBtn)
+                    .addComponent(exportCSVBtn))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -100,11 +125,27 @@ public class ViewForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
-        // TODO add your handling code here:
         JD522FA2 mainwin = new JD522FA2();
         mainwin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void editTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTaskBtnActionPerformed
+        try{
+            System.out.println(this.jTable1.getValueAt(this.jTable1.getSelectedRow(), this.jTable1.getSelectedColumn()));
+            System.out.println(this.jTable1.editCellAt(this.jTable1.getEditingRow(), this.jTable1.getEditingColumn()));
+        }catch(Exception a){
+            new JOptionPane().showMessageDialog(this, a.getMessage());
+        }
+        
+    }//GEN-LAST:event_editTaskBtnActionPerformed
+
+    private void exportCSVBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCSVBtnActionPerformed
+        // TODO add your handling code here:
+        String pathName = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 0).toString().replaceAll(" ", "-")+".csv";
+        Task task = new Task();
+        task.xportToCSV(pathName, this.jTable1, this);
+    }//GEN-LAST:event_exportCSVBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,6 +184,8 @@ public class ViewForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBtn;
+    private javax.swing.JButton editTaskBtn;
+    private javax.swing.JButton exportCSVBtn;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

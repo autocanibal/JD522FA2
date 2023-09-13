@@ -27,7 +27,7 @@ public class TextViewForm extends javax.swing.JFrame {
         fileSize = (fileSize<1024) ? fileSize:fileSize/1024;
         String form = (fileSize<1024) ? "%,d bytes": "%,d kilobytes";
         this.FileSizeLbl.setText(String.format(form, fileSize));
-        this.savedTimeLbl.setText(task.createTime(this));
+        this.savedTimeLbl.setText(task.creationTime(this));
     }
 
     /**

@@ -4,13 +4,6 @@
  */
 package org.mondemkhize.jd522fa2;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author monde
@@ -154,6 +147,10 @@ public class NewTaskForm extends javax.swing.JFrame {
         bruv.insert(taskName, category, description, completionState, this);
         
         currentTask.writeToFile(taskName, category, description, completionState, this);
+        this.TaskNameField.setText("");
+        this.CategoryField.setText("");
+        this.DecriptionField.setText("");
+        this.CompletionBox.setSelected(false);
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
