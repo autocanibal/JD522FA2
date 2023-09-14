@@ -2,7 +2,13 @@ This should be the latest build.
 
 14/09/2023
 
-If there are any errors let me know so I can commit them. 
+If there are any errors let me know so I can commit them.
+
+Dependencies needed:
+
+SQLite JDBC
+FuzzySearch
+OpenCSV
 
 When cloning or downloading the zip, be sure to rename the packages and group ID in the pom.xml. 
 Also be sure to change the value of the connectionString in TaskDB class.
