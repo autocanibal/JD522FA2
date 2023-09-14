@@ -15,9 +15,11 @@ public class NewTaskForm extends javax.swing.JFrame {
     /**
      * Creates new form NewTaskForm
      */
+    public String taskname;
     public NewTaskForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        System.out.println(this.getParent());
     }
 
     /**
@@ -43,7 +45,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NewTask");
 
-        TaskNameLabel.setText("Name:");
+        TaskNameLabel.setText("Task Name:");
 
         DescriTaskLabel.setText("Description:");
 

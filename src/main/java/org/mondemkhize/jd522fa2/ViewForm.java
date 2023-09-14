@@ -6,11 +6,14 @@ package org.mondemkhize.jd522fa2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.ToStringFunction;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 
 /**
  *
@@ -23,24 +26,60 @@ public class ViewForm extends javax.swing.JFrame {
      */
     TaskDB tdb = new TaskDB();
     ArrayList<HashMap<String, String>> taskDictionList = tdb.getTaskDictionList();
+    ArrayList<String> taskNames = tdb.getTasksNames();
     public ViewForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.searchField.getDocument().addDocumentListener(new DocumentListener (){
             @Override//from  w  w  w .  j  av  a 2s.  com
             public void insertUpdate(DocumentEvent e) {
-                System.out.println(searchField.getText() + e.toString());
-                FuzzySearch.
+                List<ExtractedResult> match = FuzzySearch.extractTop(searchField.getText(), taskNames, 5);
+                tdb.clearLists();
+                for(ExtractedResult a: match){
+                    System.out.println(a.getString());
+                    tdb.selctWhere(a.getString(), rootPane);
+                }
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(new String[]{"Task Name", "Category", "Description", "CompletionState"}, taskDictionList.size()));
+                for (int r = 0; r < taskDictionList.size(); r++) {
+                    jTable1.setValueAt(taskDictionList.get(r).get("TaskName"), r, 0);
+                    jTable1.setValueAt(taskDictionList.get(r).get("Category"), r, 1);
+                    jTable1.setValueAt(taskDictionList.get(r).get("Description"), r, 2);
+                    jTable1.setValueAt(taskDictionList.get(r).get("CompletionState"), r, 3);
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                System.out.println(searchField.getText() + e.toString());
+                if(!searchField.getText().isEmpty()){
+                List<ExtractedResult> match = FuzzySearch.extractTop(searchField.getText(), taskNames, 5);
+                tdb.clearLists();
+                for (ExtractedResult a : match) {
+                    System.out.println(a.getString());
+                    tdb.selctWhere(a.getString(), rootPane);
+                }
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(new String[]{"Task Name", "Category", "Description", "CompletionState"}, taskDictionList.size()));
+                for (int r = 0; r < taskDictionList.size(); r++) {
+                    jTable1.setValueAt(taskDictionList.get(r).get("TaskName"), r, 0);
+                    jTable1.setValueAt(taskDictionList.get(r).get("Category"), r, 1);
+                    jTable1.setValueAt(taskDictionList.get(r).get("Description"), r, 2);
+                    jTable1.setValueAt(taskDictionList.get(r).get("CompletionState"), r, 3);
+                }
+                }else{
+                    tdb.selectAll(rootPane);
+                    ArrayList<HashMap<String, String>> taskDictionList = tdb.getTaskDictionList();
+                    jTable1.setModel(new javax.swing.table.DefaultTableModel(new String[]{"Task Name", "Category", "Description", "CompletionState"}, taskDictionList.size()));
+                    for (int r = 0; r < taskDictionList.size(); r++) {
+                        jTable1.setValueAt(taskDictionList.get(r).get("TaskName"), r, 0);
+                        jTable1.setValueAt(taskDictionList.get(r).get("Category"), r, 1);
+                        jTable1.setValueAt(taskDictionList.get(r).get("Description"), r, 2);
+                        jTable1.setValueAt(taskDictionList.get(r).get("CompletionState"), r, 3);
+                    }
+                }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                System.out.println(searchField.getText() + e.toString());
+                System.out.println(searchField.getText());
             }
         });
         /*
@@ -76,7 +115,6 @@ public class ViewForm extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tdb.selectAll(this);
-        ArrayList<Task> tasks = tdb.getTasksList();
         ArrayList<HashMap<String,String>> taskDictionList = tdb.getTaskDictionList();
         jTable1 = new javax.swing.JTable();
         BackBtn = new javax.swing.JButton();
@@ -84,15 +122,16 @@ public class ViewForm extends javax.swing.JFrame {
         exportCSVBtn = new javax.swing.JButton();
         searchLbl = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(new String [] {"Task Name", "Category", "Description", "CompletionState"},tasks.size()));
-        for(Task q : tasks){
-            jTable1.setValueAt(q.getName(), tasks.indexOf(q), 0);
-            jTable1.setValueAt(q.getCategory(), tasks.indexOf(q), 1);
-            jTable1.setValueAt(q.getDescription(), tasks.indexOf(q), 2);
-            jTable1.setValueAt(String.valueOf(q.isCompletionState()), tasks.indexOf(q), 3);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(new String [] {"Task Name", "Category", "Description", "CompletionState"},taskDictionList.size()));
+        for(int r=0;r<taskDictionList.size();r++){
+            jTable1.setValueAt(taskDictionList.get(r).get("TaskName"), r, 0);
+            jTable1.setValueAt(taskDictionList.get(r).get("Category"), r, 1);
+            jTable1.setValueAt(taskDictionList.get(r).get("Description"), r, 2);
+            jTable1.setValueAt(taskDictionList.get(r).get("CompletionState"), r, 3);
         }
         jTable1.setRowSelectionAllowed(false);
         jScrollPane2.setViewportView(jTable1);
@@ -120,6 +159,8 @@ public class ViewForm extends javax.swing.JFrame {
 
         searchLbl.setText("Search:");
 
+        jLabel1.setText("Tasks Saved");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,6 +179,8 @@ public class ViewForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(134, 134, 134))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(179, 179, 179)
                         .addComponent(searchLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,7 +192,8 @@ public class ViewForm extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchLbl)
-                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -170,9 +214,15 @@ public class ViewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void editTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTaskBtnActionPerformed
+        NewTaskForm editForm = new NewTaskForm();
+        
         try{
             System.out.println(this.jTable1.getValueAt(this.jTable1.getSelectedRow(), this.jTable1.getSelectedColumn()));
             System.out.println(this.jTable1.editCellAt(this.jTable1.getEditingRow(), this.jTable1.getEditingColumn()));
+            String taskName = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 0).toString();
+            String category = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 1).toString();
+            String description = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 2).toString();
+            String completionState = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 3).toString();
         }catch(Exception a){
             new JOptionPane().showMessageDialog(this, a.getMessage());
         }
@@ -225,6 +275,7 @@ public class ViewForm extends javax.swing.JFrame {
     private javax.swing.JButton BackBtn;
     private javax.swing.JButton editTaskBtn;
     private javax.swing.JButton exportCSVBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField searchField;

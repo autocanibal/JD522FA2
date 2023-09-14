@@ -33,12 +33,21 @@ public class Task {
     
     final HashMap<String, String> TaskDictionary = new HashMap();
     
+    private ArrayList<String> taskNames = new ArrayList();
+
+    public ArrayList<String> getTaskNames() {
+        return taskNames;
+    }
+    
+    public void setTaskNames(ArrayList<String> taskNames) {
+        this.taskNames = taskNames;
+    }
     
     public HashMap<String, String> getTaskDictionary() {
-        TaskDictionary.put("Task Name", Name);
+        TaskDictionary.put("TaskName", Name);
         TaskDictionary.put("Category", Category);
         TaskDictionary.put("Description", Description);
-        TaskDictionary.put("Completion State", String.valueOf(completionState));
+        TaskDictionary.put("CompletionState", String.valueOf(completionState));
         return TaskDictionary;
     }
 

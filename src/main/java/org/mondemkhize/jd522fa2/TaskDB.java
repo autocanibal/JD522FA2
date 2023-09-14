@@ -21,8 +21,10 @@ import me.xdrop.fuzzywuzzy.model.ExtractedResult;
  */
 public class TaskDB {
     final String OSname = System.getProperty("os.name");
-    final ArrayList<Task> TasksList = new ArrayList();
-    final ArrayList<HashMap<String, String>> TaskDictionList = new ArrayList();
+    
+    private ArrayList<Task> TasksList = new ArrayList();
+    private ArrayList<HashMap<String, String>> TaskDictionList = new ArrayList();
+    private ArrayList<String> taskNames = new ArrayList();
 
     Comparator<HashMap<String, String>> categoryComparator = new Comparator<HashMap<String, String>>() {
 
@@ -34,6 +36,7 @@ public class TaskDB {
             return firstValue.compareTo(secondValue);
         }
     };
+    
     public ArrayList<HashMap<String, String>> getTaskDictionList() {
         return TaskDictionList;
     }
@@ -41,6 +44,17 @@ public class TaskDB {
     public ArrayList<Task> getTasksList() {
         return TasksList;
     }
+    
+    public ArrayList<String> getTasksNames() {
+        return taskNames;
+    }
+    
+    public void clearLists(){
+        TasksList.clear();
+        taskNames.clear();
+        TaskDictionList.clear();
+    }
+    
     private Connection connect (Component comp){
         Connection conn = null;
         
@@ -75,7 +89,9 @@ public class TaskDB {
     
     public void selectAll(Component comp){
         String sql = "select * from TaskInfo";
-        
+        TasksList.clear();
+        taskNames.clear();
+        TaskDictionList.clear();
         try(Connection conn = this.connect(comp);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql))
@@ -83,19 +99,23 @@ public class TaskDB {
             
             while(rs.next()){
                 Task currentTask = new Task();
+                
                 currentTask.setName(rs.getString("TaskName"));
                 currentTask.setCategory(rs.getString("Category"));
                 currentTask.setDescription(rs.getString("Description"));
                 boolean compState = Boolean.parseBoolean(rs.getString("CompletionState"));
+                
                 currentTask.setCompletionState(compState);
+                
                 TasksList.add(currentTask);
+                taskNames.add(currentTask.getName());
+                currentTask.setTaskNames(taskNames);
                 TaskDictionList.add(currentTask.getTaskDictionary());
             }
-            /*for(var a : TaskDictionList){
-                System.out.println(a);
-            }
-            System.out.println("\n\n");
             Collections.sort(TaskDictionList, categoryComparator);
+            /*
+            System.out.println("\n\n");
+            
             for (var a : TaskDictionList) {
                 System.out.println(a);
             }*/
@@ -105,7 +125,33 @@ public class TaskDB {
     }
     
    
-    
+    public void selctWhere(String TaskName, Component comp){
+        String sql = "select * from TaskInfo where TaskName=?";
+        
+        try (Connection conn = this.connect(comp); PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, TaskName);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Task currentTask = new Task();
+
+                currentTask.setName(rs.getString("TaskName"));
+                currentTask.setCategory(rs.getString("Category"));
+                currentTask.setDescription(rs.getString("Description"));
+                boolean compState = Boolean.parseBoolean(rs.getString("CompletionState"));
+
+                currentTask.setCompletionState(compState);
+             
+                TasksList.add(currentTask);
+                taskNames.add(currentTask.getName());
+                currentTask.setTaskNames(taskNames);
+                TaskDictionList.add(currentTask.getTaskDictionary());
+            }
+
+        } catch (SQLException e) {
+            new JOptionPane().showMessageDialog(comp, e.getMessage());
+        }
+    }
         
 }
 
