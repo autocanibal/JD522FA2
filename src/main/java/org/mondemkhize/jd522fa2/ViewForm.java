@@ -7,6 +7,7 @@ package org.mondemkhize.jd522fa2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -214,11 +215,11 @@ public class ViewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void editTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTaskBtnActionPerformed
-        NewTaskForm editForm = new NewTaskForm();
-        
+        NewTaskForm editForm = new NewTaskForm(this);
+        editForm.setVisible(true);
         try{
-            System.out.println(this.jTable1.getValueAt(this.jTable1.getSelectedRow(), this.jTable1.getSelectedColumn()));
-            System.out.println(this.jTable1.editCellAt(this.jTable1.getEditingRow(), this.jTable1.getEditingColumn()));
+            //System.out.println(this.jTable1.getValueAt(this.jTable1.getSelectedRow(), this.jTable1.getSelectedColumn()));
+            //System.out.println(this.jTable1.editCellAt(this.jTable1.getEditingRow(), this.jTable1.getEditingColumn()));
             String taskName = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 0).toString();
             String category = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 1).toString();
             String description = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 2).toString();
@@ -231,9 +232,13 @@ public class ViewForm extends javax.swing.JFrame {
 
     private void exportCSVBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCSVBtnActionPerformed
         // TODO add your handling code here:
+        try{
         String pathName = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 0).toString().replaceAll(" ", "-")+".csv";
         Task task = new Task();
         task.xportToCSV(pathName, this.jTable1, this);
+        }catch(Exception a){
+            new JOptionPane().showMessageDialog(this, a.getMessage());
+        }
     }//GEN-LAST:event_exportCSVBtnActionPerformed
 
     /**

@@ -167,6 +167,7 @@ public class Task {
 
             // closing writer connection
             writer.close();
+            new JOptionPane().showMessageDialog(comp, "Exported csv successfully", "Export success", 4);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             new JOptionPane().showMessageDialog(comp, e.getMessage());

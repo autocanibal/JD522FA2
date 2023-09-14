@@ -4,6 +4,8 @@
  */
 package org.mondemkhize.jd522fa2;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,10 +18,21 @@ public class NewTaskForm extends javax.swing.JFrame {
      * Creates new form NewTaskForm
      */
     public String taskname;
-    public NewTaskForm() {
-        initComponents();
+    public NewTaskForm(Component comp) {
+        initComponents(comp);
         this.setLocationRelativeTo(null);
-        System.out.println(this.getParent());
+        if(comp instanceof JD522FA2){
+            System.out.println("lol");
+        }
+        else if(comp instanceof ViewForm){
+            System.out.println("edit yay");
+            this.AddBtn.setText("Update");
+        }
+        
+        /*if(comp.getName()){
+            System.out.println("cool");
+        }*/
+        
     }
 
     /**
@@ -29,7 +42,7 @@ public class NewTaskForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(Component comp) {
 
         TaskNameField = new javax.swing.JTextField();
         TaskNameLabel = new javax.swing.JLabel();
@@ -58,7 +71,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         AddBtn.setText("Add");
         AddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
+                AddBtnActionPerformed(evt, comp);
             }
         });
 
@@ -133,30 +146,34 @@ public class NewTaskForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        // TODO add your handling code here:
+    private void AddBtnActionPerformed(ActionEvent evt, Component comp) {
         Task currentTask = new Task();
         currentTask.setName(this.TaskNameField.getText());
         String taskName = currentTask.getName(); //New variable made to be used in database and file
-        
+
         currentTask.setDescription(this.DecriptionField.getText());
         String description = currentTask.getDescription();//New variable made to be used in database and file
-        
+
         currentTask.setCategory(this.CategoryField.getText());
         String category = currentTask.getCategory();//New variable made to be used in database and file
-        
+
         currentTask.setCompletionState(this.CompletionBox.isSelected());
-        String completionState = String.valueOf(currentTask.isCompletionState());//New variable made to be used in database and file
-        
-        TaskDB bruv = new TaskDB();
-        bruv.insert(taskName, category, description, completionState, this);
-        
+        String completionState = String.valueOf(currentTask.isCompletionState());
+        if(comp instanceof JD522FA2){
+            TaskDB insert = new TaskDB();
+            insert.insert(taskName, category, description, completionState, this);
+
         currentTask.writeToFile(taskName, category, description, completionState, this);
         this.TaskNameField.setText("");
         this.CategoryField.setText("");
         this.DecriptionField.setText("");
         this.CompletionBox.setSelected(false);
-    }//GEN-LAST:event_AddBtnActionPerformed
+        }
+        else if(comp instanceof ViewForm){
+            TaskDB update = new TaskDB();
+
+        }
+    }
 
     private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
         // TODO add your handling code here:
@@ -195,7 +212,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewTaskForm().setVisible(true);
+                new NewTaskForm(null).setVisible(true);
             }
         });
     }
