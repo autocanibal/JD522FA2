@@ -24,5 +24,10 @@
             <version>4.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>me.xdrop</groupId>
+            <artifactId>fuzzywuzzy</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 </project>
