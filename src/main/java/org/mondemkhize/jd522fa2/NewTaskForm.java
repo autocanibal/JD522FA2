@@ -88,7 +88,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         CanclBtn.setText("Cancel");
         CanclBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CanclBtnActionPerformed(evt);
+                CanclBtnActionPerformed(evt, comp);
             }
         });
 
@@ -188,9 +188,9 @@ public class NewTaskForm extends javax.swing.JFrame {
         }
     }
 
-    private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
+    private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt, Component comp) {//GEN-FIRST:event_CanclBtnActionPerformed
         // TODO add your handling code here:
-        if(comp instanceof JD522FA2()){
+        if(comp instanceof JD522FA2){
             JD522FA2 mainwin = new JD522FA2();
             mainwin.setVisible(true);
             this.dispose();
