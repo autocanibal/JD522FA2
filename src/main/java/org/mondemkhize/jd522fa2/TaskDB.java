@@ -152,6 +152,25 @@ public class TaskDB {
             new JOptionPane().showMessageDialog(comp, e.getMessage());
         }
     }
+    
+    public void update(String Name, String Category, String Description, String CompletionState, Component comp){
+        String sql = "UPDATE TaskInfo SET Category = ?, Description = ?, CompletionState = ? "
+                + "WHERE TaskName = ?";
+
+        try (Connection conn = this.connect(comp); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the corresponding param
+            pstmt.setString(1, Category);
+            pstmt.setString(2, Description);
+            pstmt.setString(3, CompletionState);
+            pstmt.setString(4, Name);
+            // update 
+            pstmt.executeUpdate();
+            new JOptionPane().showMessageDialog(comp, "Updated succesfully");
+        } catch (SQLException e) {
+            new JOptionPane().showMessageDialog(comp, e.getMessage());
+        }
+    }
         
 }
 

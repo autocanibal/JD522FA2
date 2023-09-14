@@ -123,7 +123,7 @@ public class JD522FA2 extends javax.swing.JFrame {
 
     private void NewTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewTaskBtnActionPerformed
         // TODO add your handling code here:
-        NewTaskForm newTaskForm = new NewTaskForm(this);
+        NewTaskForm newTaskForm = new NewTaskForm(this, "", "", "", false);
         newTaskForm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_NewTaskBtnActionPerformed

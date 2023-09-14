@@ -215,8 +215,7 @@ public class ViewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_BackBtnActionPerformed
 
     private void editTaskBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTaskBtnActionPerformed
-        NewTaskForm editForm = new NewTaskForm(this);
-        editForm.setVisible(true);
+
         try{
             //System.out.println(this.jTable1.getValueAt(this.jTable1.getSelectedRow(), this.jTable1.getSelectedColumn()));
             //System.out.println(this.jTable1.editCellAt(this.jTable1.getEditingRow(), this.jTable1.getEditingColumn()));
@@ -224,6 +223,9 @@ public class ViewForm extends javax.swing.JFrame {
             String category = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 1).toString();
             String description = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 2).toString();
             String completionState = this.jTable1.getValueAt(this.jTable1.getSelectedRow(), 3).toString();
+            NewTaskForm editForm = new NewTaskForm(this, taskName, category, description,Boolean.parseBoolean(completionState));
+            editForm.setVisible(true);
+            this.dispose();
         }catch(Exception a){
             new JOptionPane().showMessageDialog(this, a.getMessage());
         }

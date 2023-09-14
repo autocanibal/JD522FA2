@@ -16,9 +16,13 @@ public class NewTaskForm extends javax.swing.JFrame {
 
     /**
      * Creates new form NewTaskForm
-     */
-    public String taskname;
-    public NewTaskForm(Component comp) {
+     * @param comp
+     * @param taskName
+     * @param Category
+     * @param description
+     * @param compleationState
+     */   
+    public NewTaskForm(Component comp, String taskName, String Category, String description, boolean compleationState) {
         initComponents(comp);
         this.setLocationRelativeTo(null);
         if(comp instanceof JD522FA2){
@@ -27,6 +31,12 @@ public class NewTaskForm extends javax.swing.JFrame {
         else if(comp instanceof ViewForm){
             System.out.println("edit yay");
             this.AddBtn.setText("Update");
+            this.TaskNameField.setText(taskName);
+            this.TaskNameField.setEditable(false);
+            this.CategoryField.setText(Category);
+            this.DecriptionField.setText(description);
+            this.CompletionBox.setSelected(compleationState);
+            
         }
         
         /*if(comp.getName()){
@@ -171,15 +181,24 @@ public class NewTaskForm extends javax.swing.JFrame {
         }
         else if(comp instanceof ViewForm){
             TaskDB update = new TaskDB();
-
+            update.update(taskName, category, description, completionState, this);
+            ViewForm viewForm = new ViewForm();
+            viewForm.setVisible(true);
+            this.dispose();
         }
     }
 
     private void CanclBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CanclBtnActionPerformed
         // TODO add your handling code here:
-        JD522FA2 mainwin = new JD522FA2();
-        mainwin.setVisible(true);
-        this.dispose();
+        if(comp instanceof JD522FA2()){
+            JD522FA2 mainwin = new JD522FA2();
+            mainwin.setVisible(true);
+            this.dispose();
+        }else if(comp instanceof ViewForm){
+            ViewForm mainwin = new ViewForm();
+            mainwin.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_CanclBtnActionPerformed
 
     /**
@@ -212,7 +231,7 @@ public class NewTaskForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewTaskForm(null).setVisible(true);
+                new NewTaskForm(null, "", "", "", false).setVisible(true);
             }
         });
     }
