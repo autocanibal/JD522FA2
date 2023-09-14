@@ -23,26 +23,40 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="488" max="-2" attributes="0"/>
-              <EmptySpace pref="126" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="editTaskBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="exportCSVBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace pref="82" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="editTaskBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="exportCSVBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="BackBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="52" pref="52" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jScrollPane2" min="-2" pref="488" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="searchLbl" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="searchField" min="-2" pref="117" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="searchLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="searchField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="320" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -50,7 +64,7 @@
                   <Component id="editTaskBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="exportCSVBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -76,8 +90,8 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TaskDB tdb = new TaskDB();&#xa;tdb.selectAll(this);&#xa;ArrayList&lt;Task&gt; tasks = tdb.getTasksList();"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(int a = 0; a&lt;tasks.size();a++ ){&#xa;jTable1.setValueAt(tasks.get(a).getName(), a, 0);&#xa;jTable1.setValueAt(tasks.get(a).getCategory(), a, 1);&#xa;jTable1.setValueAt(tasks.get(a).getDescription(), a, 2);&#xa;jTable1.setValueAt(String.valueOf(tasks.get(a).isCompletionState()), a, 3);&#xa;}&#xa;jTable1.setRowSelectionAllowed(false);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="tdb.selectAll(this);&#xa;ArrayList&lt;Task&gt; tasks = tdb.getTasksList();&#xa;ArrayList&lt;HashMap&lt;String,String&gt;&gt; taskDictionList = tdb.getTaskDictionList();"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for(Task q : tasks){&#xa;jTable1.setValueAt(q.getName(), tasks.indexOf(q), 0);&#xa;jTable1.setValueAt(q.getCategory(), tasks.indexOf(q), 1);&#xa;jTable1.setValueAt(q.getDescription(), tasks.indexOf(q), 2);&#xa;jTable1.setValueAt(String.valueOf(q.isCompletionState()), tasks.indexOf(q), 3);&#xa;}&#xa;jTable1.setRowSelectionAllowed(false);"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -105,6 +119,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportCSVBtnActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="searchLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="searchField">
     </Component>
   </SubComponents>
 </Form>

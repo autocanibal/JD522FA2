@@ -7,15 +7,36 @@ package org.mondemkhize.jd522fa2;
 import java.awt.Component;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import javax.swing.JOptionPane;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 
 /**
  *
  * @author monde
  */
 public class TaskDB {
-    private String OSname = System.getProperty("os.name");
-    private ArrayList<Task> TasksList = new ArrayList();
+    final String OSname = System.getProperty("os.name");
+    final ArrayList<Task> TasksList = new ArrayList();
+    final ArrayList<HashMap<String, String>> TaskDictionList = new ArrayList();
+
+    Comparator<HashMap<String, String>> categoryComparator = new Comparator<HashMap<String, String>>() {
+
+        @Override
+        public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
+            // Get the distance and compare the distance.
+            String firstValue = o1.get("Category");
+            String secondValue = o2.get("Category");
+            return firstValue.compareTo(secondValue);
+        }
+    };
+    public ArrayList<HashMap<String, String>> getTaskDictionList() {
+        return TaskDictionList;
+    }
 
     public ArrayList<Task> getTasksList() {
         return TasksList;
@@ -67,13 +88,23 @@ public class TaskDB {
                 currentTask.setDescription(rs.getString("Description"));
                 boolean compState = Boolean.parseBoolean(rs.getString("CompletionState"));
                 currentTask.setCompletionState(compState);
-                TasksList.add(currentTask); 
+                TasksList.add(currentTask);
+                TaskDictionList.add(currentTask.getTaskDictionary());
             }
-            
+            /*for(var a : TaskDictionList){
+                System.out.println(a);
+            }
+            System.out.println("\n\n");
+            Collections.sort(TaskDictionList, categoryComparator);
+            for (var a : TaskDictionList) {
+                System.out.println(a);
+            }*/
         }catch (SQLException e) {
             new JOptionPane().showMessageDialog(comp, e.getMessage());
         }
     }
+    
+   
     
         
 }

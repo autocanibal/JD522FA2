@@ -5,7 +5,12 @@
 package org.mondemkhize.jd522fa2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.ToStringFunction;
 
 /**
  *
@@ -16,9 +21,28 @@ public class ViewForm extends javax.swing.JFrame {
     /**
      * Creates new form ViewForm
      */
+    TaskDB tdb = new TaskDB();
+    ArrayList<HashMap<String, String>> taskDictionList = tdb.getTaskDictionList();
     public ViewForm() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.searchField.getDocument().addDocumentListener(new DocumentListener (){
+            @Override//from  w  w  w .  j  av  a 2s.  com
+            public void insertUpdate(DocumentEvent e) {
+                System.out.println(searchField.getText() + e.toString());
+                FuzzySearch.
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                System.out.println(searchField.getText() + e.toString());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                System.out.println(searchField.getText() + e.toString());
+            }
+        });
         /*
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
     new Object [][] {
@@ -51,22 +75,24 @@ public class ViewForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        TaskDB tdb = new TaskDB();
         tdb.selectAll(this);
         ArrayList<Task> tasks = tdb.getTasksList();
+        ArrayList<HashMap<String,String>> taskDictionList = tdb.getTaskDictionList();
         jTable1 = new javax.swing.JTable();
         BackBtn = new javax.swing.JButton();
         editTaskBtn = new javax.swing.JButton();
         exportCSVBtn = new javax.swing.JButton();
+        searchLbl = new javax.swing.JLabel();
+        searchField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(new String [] {"Task Name", "Category", "Description", "CompletionState"},tasks.size()));
-        for(int a = 0; a<tasks.size();a++ ){
-            jTable1.setValueAt(tasks.get(a).getName(), a, 0);
-            jTable1.setValueAt(tasks.get(a).getCategory(), a, 1);
-            jTable1.setValueAt(tasks.get(a).getDescription(), a, 2);
-            jTable1.setValueAt(String.valueOf(tasks.get(a).isCompletionState()), a, 3);
+        for(Task q : tasks){
+            jTable1.setValueAt(q.getName(), tasks.indexOf(q), 0);
+            jTable1.setValueAt(q.getCategory(), tasks.indexOf(q), 1);
+            jTable1.setValueAt(q.getDescription(), tasks.indexOf(q), 2);
+            jTable1.setValueAt(String.valueOf(q.isCompletionState()), tasks.indexOf(q), 3);
         }
         jTable1.setRowSelectionAllowed(false);
         jScrollPane2.setViewportView(jTable1);
@@ -92,34 +118,46 @@ public class ViewForm extends javax.swing.JFrame {
             }
         });
 
+        searchLbl.setText("Search:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editTaskBtn)
-                .addGap(18, 18, 18)
-                .addComponent(exportCSVBtn)
-                .addGap(18, 18, 18)
-                .addComponent(BackBtn)
-                .addGap(46, 46, 46))
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(editTaskBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(exportCSVBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(BackBtn)
+                        .addGap(52, 52, 52))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(searchLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchLbl)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BackBtn)
                     .addComponent(editTaskBtn)
                     .addComponent(exportCSVBtn))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -189,5 +227,7 @@ public class ViewForm extends javax.swing.JFrame {
     private javax.swing.JButton exportCSVBtn;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField searchField;
+    private javax.swing.JLabel searchLbl;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -29,6 +30,17 @@ public class Task {
     private String Description;
     private String Category;
     private boolean completionState;
+    
+    final HashMap<String, String> TaskDictionary = new HashMap();
+    
+    
+    public HashMap<String, String> getTaskDictionary() {
+        TaskDictionary.put("Task Name", Name);
+        TaskDictionary.put("Category", Category);
+        TaskDictionary.put("Description", Description);
+        TaskDictionary.put("Completion State", String.valueOf(completionState));
+        return TaskDictionary;
+    }
 
     public String getName() {
         return Name;
@@ -63,7 +75,7 @@ public class Task {
     }
     
     public void writeToFile(String taskName, String category, String description, String completionState, Component comp){
-        BufferedWriter out = null;
+        BufferedWriter out;
         try {
             out = new BufferedWriter(new FileWriter("out.txt"));
             out.write(taskName + "\n" + category + "\n" + description + "\n" + completionState);
@@ -107,6 +119,20 @@ public class Task {
             return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
             //return fileTime;
         }catch (IOException ex) {
+            new JOptionPane().showMessageDialog(comp, ex.getMessage());
+            return "Never";
+        }
+    }
+    
+    public String lastModified(Component comp) {
+        try {
+            Path path = Path.of("out.txt");
+            FileTime fileTime = Files.getLastModifiedTime(path);
+            LocalDateTime localDateTime = fileTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+            return localDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+            //return fileTime;
+        } catch (IOException ex) {
             new JOptionPane().showMessageDialog(comp, ex.getMessage());
             return "Never";
         }

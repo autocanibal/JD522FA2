@@ -37,7 +37,7 @@ public class JD522FA2 extends javax.swing.JFrame {
         textTasks = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TaskManager Home");
+        setTitle("TaskManager");
 
         NewTaskBtn.setText("New Task");
         NewTaskBtn.addActionListener(new java.awt.event.ActionListener() {

@@ -29,6 +29,7 @@ public class TextViewForm extends javax.swing.JFrame {
         String form = (fileSize<1024) ? "%,d bytes": "%,d kilobytes";
         this.FileSizeLbl.setText(String.format(form, fileSize));
         this.savedTimeLbl.setText(task.creationTime(this));
+        this.lastModifiedLbl.setText(task.lastModified(this));
     }
 
     /**
@@ -55,6 +56,8 @@ public class TextViewForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         savedTimeLbl = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        lastModifiedLbl = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         jLabel4.setText("jLabel4");
 
@@ -93,6 +96,10 @@ public class TextViewForm extends javax.swing.JFrame {
 
         jLabel8.setText("Saved");
 
+        lastModifiedLbl.setText("jLabel9");
+
+        jLabel9.setText("Last Modified");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,15 +107,21 @@ public class TextViewForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(FileSizeLbl, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(savedTimeLbl, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FileSizeLbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(savedTimeLbl, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(lastModifiedLbl)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(CloseBtn)
-                .addGap(50, 50, 50))
+                .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,18 +161,24 @@ public class TextViewForm extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(descriLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FileSizeLbl)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CloseBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(FileSizeLbl)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(savedTimeLbl)
-                            .addComponent(jLabel8))))
-                .addGap(34, 34, 34))
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lastModifiedLbl)
+                            .addComponent(jLabel9))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(CloseBtn)
+                        .addGap(33, 33, 33))))
         );
 
         pack();
@@ -221,6 +240,8 @@ public class TextViewForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lastModifiedLbl;
     private javax.swing.JLabel savedTimeLbl;
     private javax.swing.JLabel taskNameLbl;
     // End of variables declaration//GEN-END:variables
